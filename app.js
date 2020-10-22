@@ -1,11 +1,17 @@
 var express = require('express');
 var exphbs = require('express-handlebars');
 var mercadopago = require('mercadopago')
+var app = express();
+app.use(express.json())
+
 require('dotenv').config()
 
-var app = express();
 
-app.use(express.json())
+mercadopago.configure({
+    access_token: process.env.MPTOKEN,
+    integrator_id: process.env.INTID
+}); 
+
 
 app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
@@ -45,14 +51,14 @@ app.post('/makePayment', async function (req, res) {
                 unit_price: parseInt(req.query.unit_price),
                 quantity: 1,
                 description: "Dispositivo móvil de Tienda e-commerce",
-                picture_url: "https://images.samsung.com/is/image/samsung/ar-galaxy-a8-a530-sm-a530fzklaro-frontblack-thumb-90807303",
+                picture_url: "https://i.blogs.es/addc23/samsung-galaxy-s10/1366_2000.jpg",
             }
         ],
         external_reference: "juliocrcr91@gmail.com",
         payer: {
             name: 'Lalo',
             surname: 'Landa',
-            email: 'test_user_3422@testuser.com',
+            email: 'test_user_63274575@testuser.com',
             phone: {
                 area_code: "11",
                 number: 22223333
@@ -82,9 +88,8 @@ app.post('/makePayment', async function (req, res) {
             failure: "https://sicaruiz-mp-ecommerce-nodejs.herokuapp.com//failure",
         },
         auto_return: "approved",
-        notification_url: "https://sicaruiz-mp-ecommerce-nodejs.herokuapp.com//webhook?source_news=webhooks"
-        ,
-    }
+        notification_url: "https://sicaruiz-mp-ecommerce-nodejs.herokuapp.com//webhook?source_news=webhooks",
+    };
 
     mercadopago.preferences.create(preference)
         .then(function (response) {
@@ -95,16 +100,11 @@ app.post('/makePayment', async function (req, res) {
             res.send({ success: false, err })
         });
 
-
-})
+}); 
 
 app.use(express.static('assets'));
 
 app.use('/assets', express.static(__dirname + '/assets'));
 
-mercadopago.configure({
-    access_token: process.env.MPTOKEN,
-    integrator_id: process.env.INTID
-})
 
 app.listen(process.env.PORT || 3000);
