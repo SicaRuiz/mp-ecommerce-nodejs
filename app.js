@@ -83,12 +83,12 @@ app.post('/makePayment', async function (req, res) {
             installments: 6
         },
         back_urls: {
-            success: "https://sicaruiz-mp-ecommerce-nodejs.herokuapp.com//success",
-            pending: "https://sicaruiz-mp-ecommerce-nodejs.herokuapp.com//pending",
-            failure: "https://sicaruiz-mp-ecommerce-nodejs.herokuapp.com//failure",
+            success: "https://sicaruiz-mp-ecommerce-nodejs.herokuapp.com/success",
+            pending: "https://sicaruiz-mp-ecommerce-nodejs.herokuapp.com/pending",
+            failure: "https://sicaruiz-mp-ecommerce-nodejs.herokuapp.com/failure",
         },
         auto_return: "approved",
-        notification_url: "https://sicaruiz-mp-ecommerce-nodejs.herokuapp.com//webhook?source_news=webhooks",
+        notification_url: "https://sicaruiz-mp-ecommerce-nodejs.herokuapp.com/webhook?source_news=webhooks",
     };
 
     mercadopago.preferences.create(preference)
